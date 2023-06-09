@@ -2,8 +2,8 @@
 # Contributor: Sefa Eyeoglu <conctact@scrumplex.net>
 
 pkgname=prismlauncher
-pkgver=6.3
-pkgrel=2
+pkgver=7.0
+pkgrel=1
 pkgdesc="Minecraft launcher with ability to manage multiple instances."
 arch=('i686' 'amd64' 'arm64' 'armhf')
 url="https://prismlauncher.org"
@@ -13,7 +13,7 @@ makedepends=('scdoc' 'extra-cmake-modules' 'cmake' 'git' 'openjdk-17-jdk' 'zlib1
 optdepends=('java-runtime=8: support for Minecraft versions < 1.17'
             'java-runtime=17: support for Minecraft versions >= 1.17')	    
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
-sha256sums=('fc1896df6422248dbd767d4a82066fe6044ae104354ebf75fc5ae92252f2fb1a')
+sha256sums=('aef3d368aea8c5c65d6db0d258ef3d0a2965a009f1311568190d2b557ec01833')
 
 build() {
   cd "${srcdir}/PrismLauncher-$pkgver"
@@ -21,6 +21,7 @@ build() {
     -DCMAKE_INSTALL_PREFIX="/usr" \
     -DLauncher_BUILD_PLATFORM="debian" \
     -DLauncher_APP_BINARY_NAME="${pkgname}" \
+    -DLauncher_QT_VERSION_MAJOR=5 \
     -DENABLE_LTO=ON \
     -Bbuild -S.
   cmake --build build
