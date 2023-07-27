@@ -4,9 +4,9 @@
 
 pkgname=prismlauncher
 pkgver=7.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Minecraft launcher with ability to manage multiple instances."
-arch=('i686' 'amd64' 'arm64' 'armhf')
+arch=('i686' 'amd64' 'arm64' 'armhf' 'riscv64')
 url="https://prismlauncher.org"
 license=('GPL3')
 depends=('libqt5svg5' 'qt5-image-formats-plugins' 'libqt5xml5' 'libqt5core5a' 'libqt5network5' 'libqt5gui5')
@@ -41,9 +41,11 @@ if [[ ${CFLAGS} != *"-mtune"* && ${CFLAGS} != *"-march"* ]]; then
       CFLAGS+=" -march=armv7-a -mtune=generic"
       CXXFLAGS+=" -march=armv7-a -mtune=generic"
       ;;
-    *)
-      CFLAGS+=" -mtune=generic"
-      CXXFLAGS+=" -mtune=generic"
+    riscv64*)
+      CFLAGS+=" -march=rv64imafdc"
+      CXXFLAGS+=" -march=rv64imafdc"
+      CFLAGS=${CFLAGS/-fcf-protection/}
+      CXXFLAGS=${CXXFLAGS/-fcf-protection/}
       ;;
   esac
 fi
