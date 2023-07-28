@@ -4,7 +4,7 @@
 
 pkgname=prismlauncher
 pkgver=7.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Minecraft launcher with ability to manage multiple instances."
 arch=('i686' 'amd64' 'arm64' 'armhf' 'riscv64')
 url="https://prismlauncher.org"
@@ -25,13 +25,15 @@ CFLAGS=${CFLAGS/-march=x86-64/}
 CXXFLAGS=${CXXFLAGS/-march=x86-64/}
 CFLAGS=${CFLAGS/-mtune=generic/}
 CXXFLAGS=${CXXFLAGS/-mtune=generic/}
+CFLAGS=${CFLAGS/-fcf-protection/}
+CXXFLAGS=${CXXFLAGS/-fcf-protection/}
 
 # if the user hasn't specified a tuning/architecture, specify our own minimal defaults to cover the earliest CPUs
 if [[ ${CFLAGS} != *"-mtune"* && ${CFLAGS} != *"-march"* ]]; then
   case $(uname -m) in
     x86_64)
-      CFLAGS+=" -march=x86-64 -mtune=generic"
-      CXXFLAGS+=" -march=x86-64 -mtune=generic"
+      CFLAGS+=" -march=x86-64 -mtune=generic -fcf-protection"
+      CXXFLAGS+=" -march=x86-64 -mtune=generic -fcf-protection"
       ;;
     aarch64*|armv8*|armv9*|arm64*)
       CFLAGS+=" -march=armv8-a -mtune=generic"
@@ -44,8 +46,6 @@ if [[ ${CFLAGS} != *"-mtune"* && ${CFLAGS} != *"-march"* ]]; then
     riscv64*)
       CFLAGS+=" -march=rv64imafdc"
       CXXFLAGS+=" -march=rv64imafdc"
-      CFLAGS=${CFLAGS/-fcf-protection/}
-      CXXFLAGS=${CXXFLAGS/-fcf-protection/}
       ;;
   esac
 fi
