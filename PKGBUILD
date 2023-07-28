@@ -4,7 +4,7 @@
 
 pkgname=prismlauncher
 pkgver=7.2
-pkgrel=3
+pkgrel=4
 pkgdesc="Minecraft launcher with ability to manage multiple instances."
 arch=('i686' 'amd64' 'arm64' 'armhf' 'riscv64')
 url="https://prismlauncher.org"
@@ -40,8 +40,8 @@ if [[ ${CFLAGS} != *"-mtune"* && ${CFLAGS} != *"-march"* ]]; then
       CXXFLAGS+=" -march=armv8-a -mtune=generic"
       ;;
     arm*)
-      CFLAGS+=" -march=armv7-a -mtune=generic"
-      CXXFLAGS+=" -march=armv7-a -mtune=generic"
+      CFLAGS+=" -march=armv7-a"
+      CXXFLAGS+=" -march=armv7-a"
       ;;
     riscv64*)
       CFLAGS+=" -march=rv64imafdc"
